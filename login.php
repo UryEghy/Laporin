@@ -1,7 +1,6 @@
 <?php
 session_start();
 include 'koneksi.php';
-include 'header.php';
 
 $pesan = "";
 $email_ingat = isset($_COOKIE['email_ingat']) ? $_COOKIE['email_ingat'] : "";
