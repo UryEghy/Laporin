@@ -17,6 +17,7 @@ $result = $connect->query("SELECT * FROM users ORDER BY id DESC");
     <meta charset="UTF-8">
     <title>Admin - Data Pengguna</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
@@ -81,5 +82,6 @@ $result = $connect->query("SELECT * FROM users ORDER BY id DESC");
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
 </body>
 </html>
