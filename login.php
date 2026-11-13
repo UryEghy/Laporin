@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'header.php';
 
 $pesan = "";
 $email_ingat = isset($_COOKIE['email_ingat']) ? $_COOKIE['email_ingat'] : "";
@@ -79,5 +80,6 @@ if (isset($_POST['masuk'])) {
             </div>
         </div>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 </html>
