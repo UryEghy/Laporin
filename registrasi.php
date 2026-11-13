@@ -3,6 +3,7 @@ session_start();
 include 'koneksi.php';
 
 $pesan = "";
+include 'header.php';
 
 if (isset($_POST['daftar'])) {
     $nama = trim($_POST['nama']);
@@ -76,5 +77,6 @@ if (isset($_POST['daftar'])) {
             </div>
         </div>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 </html>
