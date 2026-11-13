@@ -24,8 +24,18 @@ if (isset($_POST['masuk'])) {
             $_SESSION['nama'] = $user['nama'];
             $_SESSION['role'] = $user['role'];
 
-        if (isset($_POST['ingat'])) {
-            setcookie("email_ingat", $email, time() + (30 * 24 * 60 * 60), "/");
+            if (isset($_POST['ingat'])) {
+                setcookie("email_ingat", $email, time() + (30 * 24 * 60 * 60), "/");
+            } else {
+                setcookie("email_ingat", "", time() - 3600, "/");
+            }
+
+            if ($user['role'] == 'admin') {
+                header("Location: admin/laporan.php");
+            } else {
+                header("Location: user/dashboard.php");
+            }
+            exit;
         } else {
             setcookie("email_ingat", "", time() - 3600, "/");
         }
@@ -40,7 +50,6 @@ if (isset($_POST['masuk'])) {
         }
         $stmt->close();
     }
-}
 ?>
 
 <!DOCTYPE html>
@@ -51,12 +60,12 @@ if (isset($_POST['masuk'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-light d-flex align-items-center" style="min-height: 100vh;">
+<body class="bg-light d-flex justify-content-center align-items-center vh-100 m-0">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-5">
-                <div class="card shadow-sm p-4">
-                    <h3 class="text-center mb-4">Masuk <b>lapor.in</b></h3>
+                <div class="card shadow-sm p-4 border-0">
+                    <h3 class="text-center mb-4 fw-bold">Masuk <b>lapor.in</b></h3>
                     <?= $pesan; ?>
                     <form method="POST" action="">
                         <div class="mb-3">
@@ -71,10 +80,10 @@ if (isset($_POST['masuk'])) {
                             <input type="checkbox" name="ingat" class="form-check-input" id="ingat" <?= $email_ingat != "" ? "checked" : ""; ?>>
                             <label class="form-check-label" for="ingat">Ingat Email Saya</label>
                         </div>
-                        <button type="submit" name="masuk" class="btn btn-primary w-100">Masuk</button>
+                        <button type="submit" name="masuk" class="btn btn-primary w-100 py-2">Masuk</button>
                     </form>
                     <div class="mt-3 text-center">
-                        Belum punya akun? <a href="registrasi.php">Daftar di sini</a>
+                        <small class="text-muted">Belum punya akun? <a href="registrasi.php" class="text-decoration-none">Daftar di sini</a></small>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id']) \vert{}\vert{}$_SESSION['role'] != 'mahasiswa') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'mahasiswa') {
     header("Location: ../login.php");
     exit;
 }
@@ -10,9 +10,12 @@ include '../koneksi.php';
 
 $pesan = "";
 
-if (isset($_POST['kirim'])) {$user_id = $_SESSION['user_id'];$fasilitas_id = $_POST['fasilitas_id'];$judul = trim($_POST['judul']);$deskripsi = trim($_POST['deskripsi']);$status = 'menunggu';
+if (isset($_POST['kirim'])) {
+    $user_id = $_SESSION['user_id'];
+    $fasilitas_id = $_POST['fasilitas_id'];
+    $judul = trim($_POST['judul']);$deskripsi = trim($_POST['deskripsi']);$status = 'menunggu';
 
-    if ($fasilitas_id == "" || $judul == "" \vert{}\vert{} $deskripsi == "") {
+    if ($fasilitas_id == "" || $judul == "" || $deskripsi == "") {
         $pesan = "<div class='alert alert-danger'>Semua kolom wajib diisi!</div>";
     } else {
         $query = "INSERT INTO laporan (user_id, fasilitas_id, judul, deskripsi, status) VALUES (?, ?, ?, ?, ?)";
@@ -53,4 +56,20 @@ include '../header.php';
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class
+                        <label class"form-label">Judul Laporan</label>
+                        <input type="text" name="judul" class="form-control" placeholder="Contoh: AC Kelas Rusak / Proyektor Mati" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Deskripsi Kerusakan</label>
+                        <textarea name="deskripsi" class="form-control" rows="4" placeholder="Jelaskan kondisi kerusakan secara detail..." required></textarea>
+                    </div>
+                    <button type="submit" name="kirim" class="btn btn-primary w-100">Kirim Laporan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php 
+include '../footer.php'; 
+?>
