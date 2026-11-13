@@ -4,24 +4,32 @@ include 'koneksi.php';
 
 $pesan = "";
 
-if (isset($_POST['daftar'])) {$nama = trim($_POST['nama']);$email = trim($_POST['email']);$password = $_POST['password'];$role = "mahasiswa";
+if (isset($_POST['daftar'])) {
+    $nama = trim($_POST['nama']);
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+    $role = "mahasiswa";
 
-    if ($nama == "" || $email == "" \vert{}\vert{} $password == "") {
+    if ($nama == "" || $email == "" || $password == "") {
         $pesan = "<div class='alert alert-danger'>Semua kolom wajib diisi!</div>";
     } else {
         $cek_query = "SELECT id FROM users WHERE email = ?";
         $stmt_cek = $connect->prepare($cek_query);
         $stmt_cek->bind_param("s", $email);
-        $stmt_cek->execute();$stmt_cek->store_result();
+        $stmt_cek->execute();
+        $stmt_cek->store_result();
 
-        if ($stmt_cek->num_rows > 0) {$pesan = "<div class='alert alert-danger'>Email sudah terdaftar! Gunakan email lain.</div>";
+        if ($stmt_cek->num_rows > 0) {
+            $pesan = "<div class='alert alert-danger'>Email sudah terdaftar! Gunakan email lain.</div>";
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             $insert_query = "INSERT INTO users (nama, email, password, role) VALUES (?, ?, ?, ?)";
-            $stmt =$connect->prepare($insert_query);$stmt->bind_param("ssss", $nama,$email, $hashed_password,$role);
+            $stmt =$connect->prepare($insert_query);
+            $stmt->bind_param("ssss", $nama,$email, $hashed_password,$role);
 
-            if ($stmt->execute()) {$pesan = "<div class='alert alert-success'>Daftar berhasil! Silakan <a href='login.php'>Login</a>.</div>";
+            if ($stmt->execute()) {
+                $pesan = "<div class='alert alert-success'>Daftar berhasil! Silakan <a href='login.php'>Login</a>.</div>";
             } else {
                 $pesan = "<div class='alert alert-danger'>Gagal mendaftar. Coba lagi.</div>";
             }
