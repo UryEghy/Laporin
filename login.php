@@ -10,14 +10,14 @@ if (isset($_POST['masuk'])) {
     $password = $_POST['password'];
 
     if ($email == "" || $password == "") {
-        $pesan = "<div class='alert alert-denger'>Email dan password wajib diisi!</d>";
+        $pesan = "<div class='alert alert-danger'>Email dan password wajib diisi!</div>";
     } else {
         $query = "SELECT id, nama, password, role FROM users WHERE email = ?";
-        $start = $connect->prepare($query);
+        $stmt = $connect->prepare($query);
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $hasil = $stmt->get_result();
-        $user = hasil->fetch_assoc();
+        $user = $hasil->fetch_assoc();
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
@@ -35,8 +35,8 @@ if (isset($_POST['masuk'])) {
             header("Location: admin/dashboard.php");
         }
         exit;
-        } else {
-            $pesan = "<div class='alert alert-denger'>Email atau password salah!</div";
+    } else {
+            $pesan = "<div class='alert alert-danger'>Email atau password salah!</div>";
         }
         $stmt->close();
     }
@@ -49,6 +49,7 @@ if (isset($_POST['masuk'])) {
     <meta charset="UTF-8">
     <title>Login - Lapor.in</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-light d-flex align-items-center" style="min-height: 100vh;">
     <div class="container">
@@ -79,6 +80,7 @@ if (isset($_POST['masuk'])) {
             </div>
         </div>
     </div>
-    <?php include 'footer.php'; ?>
+    <script src="script.js">
+    </script>
 </body>
 </html>
