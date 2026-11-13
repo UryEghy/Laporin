@@ -10,34 +10,33 @@ if (isset($_POST['masuk'])) {
     $password = $_POST['password'];
 
     if ($email == "" || $password == "") {
-        $pesan = "<div class='alert alert-danger'>Email dan password wajib diisi!</div>";
+        $pesan = "<div class='alert alert-denger'>Email dan password wajib diisi!</d>";
     } else {
         $query = "SELECT id, nama, password, role FROM users WHERE email = ?";
-        $stmt = $connect->prepare($query);
+        $start = $connect->prepare($query);
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $hasil = $stmt->get_result();
-        $user = $hasil->fetch_assoc();
+        $user = hasil->fetch_assoc();
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['nama'] = $user['nama'];
             $_SESSION['role'] = $user['role'];
 
-            if (isset($_POST['ingat'])) {
-                setcookie("email_ingat", $email, time() + (30 * 24 * 60 * 60), "/");
-            } else {
-                setcookie("email_ingat", "", time() - 3600, "/");
-            }
-
-            if ($user['role'] == 'admin') {
-                header("Location: admin/laporan.php");
-            } else {
-                header("Location: user/dashboard.php");
-            }
-            exit;
+        if (isset($_POST['ingat'])) {
+            setcookie("email_ingat", $email, time() + (30 * 24 * 60 * 60), "/");
         } else {
-            $pesan = "<div class='alert alert-danger'>Email atau password salah!</div>";
+            setcookie("email_ingat", "", time() - 3600, "/");
+        }
+        if ($user['role'] == 'admin') {
+            header("Location: admin/laporan.php");
+        } else {
+            header("Location: admin/dashboard.php");
+        }
+        exit;
+        } else {
+            $pesan = "<div class='alert alert-denger'>Email atau password salah!</div";
         }
         $stmt->close();
     }
